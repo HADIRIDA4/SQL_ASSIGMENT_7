@@ -26,17 +26,14 @@ HAVING AVG(SE_F.RENTAL_DURATION) > 5;
 
 ------------------------------------------------------------------
 --: Determine the total rental amount collected from each customer. List only those customers who have spent more than $100 in total.
-WITH CTE_AMOUNT_COLLECTED AS
-	(SELECT SE_C.CUSTOMER_ID,
-			SUM(SE_P.AMOUNT) AS AMOUNT_COLLECTED
-		FROM CUSTOMER AS SE_C
-		INNER JOIN PAYMENT AS SE_P ON SE_C.CUSTOMER_ID = SE_P.CUSTOMER_ID
-		GROUP BY SE_C.CUSTOMER_ID
-		ORDER BY CUSTOMER_ID)
-SELECT *
-FROM CTE_AMOUNT_COLLECTED
-WHERE AMOUNT_COLLECTED > 100
+SELECT SE_C.CUSTOMER_ID,
+    SUM(SE_P.AMOUNT) AS AMOUNT_COLLECTED
+FROM CUSTOMER AS SE_C
+INNER JOIN PAYMENT AS SE_P ON SE_C.CUSTOMER_ID = SE_P.CUSTOMER_ID
+GROUP BY SE_C.CUSTOMER_ID
+HAVING SUM(SE_P.AMOUNT) > 100
 ORDER BY AMOUNT_COLLECTED;
+
 
 ----------------------------------
 --: Create a temporary table containing the names and email addresses of customers who have rented more than 10 films.
