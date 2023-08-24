@@ -1,4 +1,4 @@
--- Create a temporary table from the CTE.
+
 CREATE TEMP TABLE temp_cte AS 
 WITH CTE_total_nb_films_rented_per_cat AS (
     SELECT
